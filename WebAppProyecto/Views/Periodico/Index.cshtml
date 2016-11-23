@@ -1,0 +1,79 @@
+﻿@model WebAppProyecto.Models.Periodico.ListPeriodico
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    <head>
+        <script type="text/javascript" src="@Url.Content("~/Scripts/Periodico.js")"></script>
+        <script src="~/Scripts/jquery-1.10.2.js"></script>
+        <script src="~/Scripts/modernizr-2.6.2.js"></script>
+        <script src="~/Scripts/bootstrap.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        @{
+
+            <script type="text/javascript">
+                var doc = doc || {};
+                doc.Urls = doc.Urls || {};
+                doc.Urls.baseUrl = '@Url.Action("~")';
+                doc.Urls.searchDocUrl = '@Url.Action("Grid", "Periodico")';
+            </script>
+
+        }
+    </head>
+}
+
+<center>
+    <br />
+    <h2>Listado de Documentos</h2>
+    <br />
+    <div class="panel-body">
+        <div class="form-horizontal">
+            <form id="formAusenciaFiltro" role="form">
+                <div class="col-sm-12">
+                    <table>
+                        <tr>
+                            <td class="col-sm-2">
+                                @Html.Label("DateStart", "Date Start:", htmlAttributes: new { @class = "control-label col-sm-5" })
+                            </td>
+                            <td>
+                                @Html.EditorFor(model => model.Filtro.dateInicio, new { htmlAttributes = new { @type = "date", @class = "form-control", @placeholder = "Date Start" } })
+                            </td>
+                            <td>  </td>
+                            <td class="col-sm-2">
+                                @Html.Label("DateEnd", "Date End:", htmlAttributes: new { @class = "control-label col-sm-5" })
+                            </td>
+                            <td>
+                                @Html.EditorFor(model => model.Filtro.dateFin, new { htmlAttributes = new { @type = "date", @class = "form-control", @placeholder = "Date End" } })
+                            </td>
+                            <td>
+                                @Html.Label("", "       ", htmlAttributes: new { @class = "control-label col-sm-2" })
+                            </td>
+                            <td>
+                                <button id="btnBuscar" class="btn btn-primary" type="button" onclick="">Buscar</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br />
+    <center>
+        <div id="divGrid" class="pre-scrollable" style="height:1400px; width:1000px;">
+            @Html.Partial("Grid")
+        </div>
+    </center>
+</center>
+
+<script type="text/javascript">
+    (function () {
+        debugger;
+        iniciar();
+    })();
+
+</script>
