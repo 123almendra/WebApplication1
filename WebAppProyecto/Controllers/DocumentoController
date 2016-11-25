@@ -1,0 +1,47 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using CapaModelo;
+using PagedList;
+using CapaLogica;
+
+namespace WebAppProyecto.Controllers
+{
+    public class DocumentoController : Controller
+    {
+        PeriodicoLogica pLogica = new PeriodicoLogica();
+        // GET: Documento
+        public ActionResult Index(string  pageindex, string currentFilter, string currentFilter2,string searchString, string searchString2,int page = 1, int pageSize = 10)
+        {
+            ViewBag.CurrentSort = pageindex;
+            ViewBag.DateInicioSortParm = String.IsNullOrEmpty(pageindex) ? "dateInclude" : "";
+            ViewBag.DateFinSortParm = String.IsNullOrEmpty(pageindex) ? "dateFin" : "";
+
+            if (searchString != null && searchString2 !=null)
+            { page = 1; }
+            else
+            { searchString = currentFilter;
+                searchString2 = currentFilter2;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+            ViewBag.CurrentFilter2 = searchString2;
+
+            List<CapaModelo.Periodico> periodico = new List<CapaModelo.Periodico>();
+            periodico = pLogica.getAllDocumentos();
+
+            if (!string.IsNullOrEmpty(searchString) && !string.IsNullOrEmpty(searchString2))
+            {
+                periodico = periodico.Where(s => s.dateInclude.Contains(searchString)).ToList();// && s.dateFin.Contains(searchString2)                
+            }
+
+            
+            PagedList<CapaModelo.Periodico> pgList = new PagedList<CapaModelo.Periodico>( periodico, page, pageSize);
+            return View(pgList);
+
+        }
+      
+    }
+}
