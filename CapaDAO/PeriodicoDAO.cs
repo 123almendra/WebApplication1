@@ -99,7 +99,8 @@ namespace CapaDAO
                             Pk_Doc = Convert.ToInt32(dr["Pk_Doc"]),
                             Fk_Cat = Convert.ToInt32(dr["FK_cat"]),
                             Categoria = dr["Cat"].ToString(),
-                            dateInclude = Convert.ToDateTime(dr["dateInclude"]),
+                            
+                            dateInclude = Convert.ToDateTime(Convert.ToDateTime(dr["dateInclude"]).ToString("dd/MM/yyyy")),
                             //dateInicio = Convert.ToDateTime(dr["dateStart"]),
                             //dateFin = Convert.ToDateTime(dr["dateEnd"])
                             dateInicio = dr["dateStart"].ToString(),
@@ -108,7 +109,7 @@ namespace CapaDAO
                     }
                 }
             }
-
+            
             return oPeriodico;
 
         }
